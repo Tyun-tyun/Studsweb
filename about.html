@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ===== SHARED HEAD - identical on every page except the four
+     values below. When this becomes templated, these are the
+     variables: title, description, robots, body[data-page|data-nav]. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About &mdash; The Slapping Studs</title>
+<meta name="description" content="SIJHV The Slapping Studs: student ice hockey at the University of Twente since 1982.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+
+<!-- Load order matters: tokens define the variables everything
+     else uses, and every file after it only spends those values.
+     paper.css follows components.css because it is a second set of
+     components - the same system worked on paper - and not an
+     override of the first. deck.css is last of the layout files
+     because it is the one that decides how a section is sized. -->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/paper.css">
+<link rel="stylesheet" href="css/deck.css">
+<link rel="stylesheet" href="css/admin.css">
+<!-- ===== /SHARED HEAD ===== -->
+<style>
+/* ============================================================
+   about.html, page-scoped.
+
+   The gold .strip of four squad tiles that used to sit on the
+   floor of the head is gone: four squad names set in a yellow
+   band read as a highlighter stroke across the page, and gold on
+   this site is an accent, not a field. The squads are now a list
+   of rows further down, each carrying its own .sq-* mark so the
+   club's squad colours stay in one place (components.css).
+
+   What sits on the floor of the head instead is the club's own
+   2026 squad photograph, full bleed. It closes both margins and
+   it is the one thing on this page that is unarguably the club.
+   ============================================================ */
+
+body[data-page="about"] .phead h1{margin:0}
+body[data-page="about"] .pagelead{font-size:19px;line-height:1.55;max-width:58ch}
+
+/* --- the photograph band on the floor of the head ----------- */
+body[data-page="about"] .abband{margin:0;position:relative;overflow:clip}
+body[data-page="about"] .abband .ph{aspect-ratio:16/6;min-height:200px}
+body[data-page="about"] .abband figcaption{
+  margin:0;padding-top:12px;
+  font-size:14px;line-height:1.5;color:var(--ink-m);
+}
+body[data-page="about"] #club{padding-bottom:clamp(20px,2.6vw,32px)}
+
+/* --- the club in words, under two dated pictures ------------
+   The two archive pictures run as a pair across the sheet and
+   the prose sets in three columns underneath, so neither side
+   of the page is left holding nothing. */
+body[data-page="about"] .abfigs{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(18px,2.4vw,32px);
+}
+body[data-page="about"] .abcols{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));
+  gap:clamp(22px,3vw,44px);margin-top:clamp(30px,3.6vw,48px);
+}
+body[data-page="about"] .abcols p.body{font-size:17px;line-height:1.65;max-width:none;margin:0}
+body[data-page="about"] .abfig{margin:0}
+body[data-page="about"] .abfig .ph{aspect-ratio:4/3}
+body[data-page="about"] .abfig figcaption{
+  margin-top:10px;font-size:15px;line-height:1.5;color:var(--ink-m);
+}
+
+/* --- the four squads, as rows rather than tiles -------------- */
+body[data-page="about"] .sqintro{font-size:17px;line-height:1.6;max-width:58ch;margin:0 0 clamp(26px,3.4vw,42px)}
+body[data-page="about"] .sqlist{display:grid;gap:clamp(26px,3.2vw,40px)}
+body[data-page="about"] .sqrow{
+  display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:clamp(14px,3vw,48px);align-items:start;
+}
+body[data-page="about"] .sqname{
+  margin:0;display:flex;align-items:center;gap:13px;
+  font-family:var(--disp);font-stretch:76%;font-weight:800;text-transform:uppercase;
+  font-size:clamp(22px,2.5vw,33px);line-height:1;color:var(--ink);
+}
+/* The swatch carries a 2px edge in its own colour, so the black
+   Stallions mark and the white Cadets mark both read on paper.
+   The four colours themselves stay in components.css. */
+body[data-page="about"] .sqname .sq{width:15px;height:15px;border-width:2px;border-style:solid}
+body[data-page="about"] .sqdiv{margin:11px 0 0;font-size:15px;line-height:1.4;color:#6B5200}
+body[data-page="about"] .sqtext{margin:0;font-size:17px;line-height:1.6;color:var(--ink-b);max-width:56ch}
+
+/* --- where and when: picture and a plain list of facts ------- */
+body[data-page="about"] .abwhere{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(28px,4vw,64px);align-items:start;
+}
+body[data-page="about"] .abwhere .ph{aspect-ratio:4/3}
+body[data-page="about"] .fctlist{
+  display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);
+  gap:18px clamp(16px,2.4vw,36px);margin:0;
+}
+body[data-page="about"] .fctlist dt{margin:0;font-size:15px;line-height:1.4;color:#6B5200}
+body[data-page="about"] .fctlist dd{margin:0;font-size:17px;line-height:1.6;color:var(--ink-b)}
+body[data-page="about"] .abwhere .tlink{display:inline-block;margin-top:clamp(24px,3vw,34px);font-size:17px}
+
+/* --- plain rows: no rules, no capitals. Rows are separated by
+   space, the division and the fact keys are set in normal case
+   at reading size in the dark gold. */
+body[data-page="about"] .abfig .ph{border-radius:3px}
+body[data-page="about"] .abfig figcaption{font-size:14px}
+body[data-page="about"] .sqlist{gap:clamp(30px,3.6vw,46px)}
+body[data-page="about"] .sqdiv{margin:10px 0 0;font-size:15px;font-weight:600;line-height:1.4;color:#6B5200}
+body[data-page="about"] .fctlist{gap:clamp(18px,2vw,26px) clamp(16px,2.4vw,36px)}
+body[data-page="about"] .fctlist dt{font-size:15px;font-weight:600;line-height:1.6;color:#6B5200}
+
+@media (max-width:860px){
+  body[data-page="about"] .abfigs,
+  body[data-page="about"] .abwhere,
+  body[data-page="about"] .sqrow,
+  body[data-page="about"] .fctlist{grid-template-columns:minmax(0,1fr)}
+  body[data-page="about"] .fctlist{gap:4px 0}
+  body[data-page="about"] .fctlist dd{margin-bottom:14px}
+  body[data-page="about"] .abband .ph{aspect-ratio:4/3}
+}
+
+/* --- motion: each row and figure rises as it comes up -------
+   Transform and opacity only, scroll-driven, and the whole rule
+   sits inside both a reduced-motion guard and an @supports, so a
+   browser without scroll timelines simply gets the finished page
+   with nothing hidden. */
+/* Translate only, never opacity: nothing on this page is ever
+   invisible, with or without a scroll timeline. */
+@keyframes ab-rise{from{transform:translateY(20px)}to{transform:none}}
+@keyframes ab-pan{from{transform:scale(1.07) translateY(-1.4%)}to{transform:scale(1.07) translateY(1.4%)}}
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    body[data-page="about"] .rise,
+    body[data-page="about"] .panel.bone .phead > div,
+    body[data-page="about"] .sqintro{
+      animation:ab-rise linear both;
+      animation-timeline:view();
+      animation-range:entry 2% entry 42%;
+    }
+    /* the one moving picture: the squad photograph drifts a few
+       pixels inside its band as the head scrolls past */
+    body[data-page="about"] .abband .ph{
+      animation:ab-pan linear both;
+      animation-timeline:view();
+      animation-range:cover 0% cover 100%;
+    }
+  }
+}
+</style>
+</head>
+<!-- data-page  = which document this is; js/routes.js maps it to a URL
+     data-nav   = which top-level nav item lights up -->
+<body data-page="about" data-nav="about">
+
+<!-- ===== SHARED HEADER - identical on every page ===== -->
+
+<!-- hairline column grid, purely decorative -->
+<div class="gridlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<!-- invisible strip that brings the collapsed header back -->
+<div id="hotzone" aria-hidden="true"></div>
+
+<header id="hdr">
+  <div class="bar">
+    <a class="badge" href="index.html">
+      <span class="mark">
+        <!-- Placeholder mark. Replace with the real club badge:
+             assets/logo.svg, kept as SVG so it stays sharp. -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#EDEAE1" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 4c1.6 1.2 2.4 2.9 2.6 4.6.9-.6 2-.7 3-.3l2.6 1.1"/>
+          <path d="M6.6 8.6c-.6 1.9-.4 3.9.6 5.6l1.6 2.7"/>
+          <path d="M12.2 9.4l5.4 2.3c1.3.6 2 2 1.7 3.4l-.7 3.3"/>
+          <path d="M8.8 16.9l-1.3 3.2M19.4 18.4l1.1 2"/>
+        </svg>
+      </span>
+      <span class="wordmark"><span class="n">Slapping Studs</span><span class="s">EST. 1982 &middot; ENSCHEDE</span></span>
+    </a>
+
+    <!-- nav and account chip are rendered by js/views.js because
+         their contents depend on who is signed in -->
+    <nav id="nav"></nav>
+    <div class="hactions" id="hactions"></div>
+  </div>
+  <div class="acctmenu" id="acctmenu"></div>
+</header>
+<div class="peekhint" aria-hidden="true"></div>
+<!-- ===== /SHARED HEADER ===== -->
+
+<!-- ===== THE PAGE =====
+     One section on this site is sized to exactly one screen: the
+     .panel--cover on the home page, where a reader should arrive to
+     a photograph and nothing else. Every other section anywhere -
+     including the .pagehead an inside page opens with - is an
+     ordinary .panel and takes the height its own content needs.
+     id = the deep link; data-label = what the section is called.
+     Add a section by adding one; there is nothing to register.
+     ================================================================ -->
+<main>
+
+<!-- The head, then the club's own squad photograph full bleed on
+     its floor. This is where the gold strip of four squad tiles
+     used to be; the squads are now the list in #squads below. -->
+<section class="panel pagehead bone on-bone" id="club" data-label="The club">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h1 class="disp d2" data-ed="about.squads.h2">About the Slapping Studs</h1>
+          <p class="body pagelead" data-ed="about.squads.lead">We are the student ice hockey club of Enschede: four squads, one coach and about sixty people sharing the ice at IJsbaan Twente three evenings a week.</p>
+        </div>
+        <a class="tlink" href="join.html">Come to a practice</a>
+      </div>
+    </div>
+  </div>
+  <figure class="abband">
+    <div class="ph" data-slot="about-squad" data-img="assets/photos/hero-squad-2026.jpg" data-ph="The club, season 2025&ndash;26" role="img" aria-label="The Slapping Studs squads together on the ice, season 2025-26"></div>
+    <div class="wrap"><figcaption data-ed="about.band.cap">The club together at IJsbaan Twente, season 2025&ndash;26. Our own photograph.</figcaption></div>
+  </figure>
+</section>
+
+<!-- What the club is, in running text rather than in tiles, with
+     two dated pictures of the world it started in. Neither is of
+     the Studs, and both say so in their caption. -->
+<section class="panel bone on-bone" id="story" data-label="The club">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h2 class="disp d3" data-ed="about.story.h2">Founded in 1982, still run by students</h2>
+        </div>
+        <a class="tlink" href="history.html">The whole history</a>
+      </div>
+      <div class="abfigs">
+        <figure class="abfig rise">
+          <div class="ph" data-slot="about-1982" data-img="assets/nog-veel-mensen-op-het-ijs-ijshockey.jpg" data-ph="Ice hockey on the Amsterdam canals, January 1982" role="img" aria-label="People playing ice hockey on a frozen canal in Amsterdam, January 1982">
+            <span class="phcredit">Photo: Hans van Dijk / Anefo, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a></span>
+          </div>
+          <figcaption data-ed="about.fig1.cap">Ice hockey on the Amsterdam canals, 17 January 1982 &mdash; the winter the club was founded. Not the Studs, and not our picture.</figcaption>
+        </figure>
+        <figure class="abfig rise">
+          <div class="ph" data-slot="about-campus" data-img="assets/technische-hogeschool-twente-en-de-campus-interieur.jpg" data-ph="The Twente campus, 1964" role="img" aria-label="The interior of the Technische Hogeschool Twente campus in 1964">
+            <span class="phcredit">Photo: Joop van Bilsen / Anefo, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a></span>
+          </div>
+          <figcaption data-ed="about.fig2.cap">The Twente campus in 1964, eighteen years before the first Studs practice. A press photograph, not ours.</figcaption>
+        </figure>
+      </div>
+      <div class="abcols">
+        <div class="rise">
+          <p class="body" data-ed="about.story.p1">SIJHV The Slapping Studs was founded in February 1982 and has been playing in Enschede ever since. It is the oldest student ice hockey association in the Netherlands, and it is affiliated with the University of Twente &mdash; though it has never been closed off to one school. UT and Saxion students skate here, and so do people who are not studying at all.</p>
+        </div>
+        <div class="rise">
+          <p class="body" data-ed="about.story.p2">Fifty to sixty members are spread over four squads with one coach between them. English is the working language of the club: on the ice, at practice and in the club&rsquo;s own business, because English is what the room actually has in common.</p>
+        </div>
+        <div class="rise">
+          <p class="body" data-ed="about.story.p3">Nobody is expected to turn up knowing how to play. Most members start in the Cadets, where there is no league and nothing is assumed. The club lends skates, a helmet with a cage, gloves, pads, a stick and a neck guard, and the first practice costs nothing &mdash; you need a pair of gloves and the willingness to fall over in front of strangers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The four squads. One row each, no tiles and no yellow band;
+     the mark in front of each name is the .sq-* swatch the whole
+     site uses, so the squad colours stay defined in one file. -->
+<section class="panel bone on-bone panel--cont" id="squads" data-label="Squads">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h2 class="disp d3" data-ed="about.teams.h2">The four squads</h2>
+        </div>
+        <a class="tlink" href="players.html">See the roster</a>
+      </div>
+      <p class="sqintro" data-ed="about.teams.lead">Which squad you play in follows how much hockey you have behind you, not how long you have been a member. People move between them as the season goes.</p>
+
+      <div class="sqlist">
+        <div class="sqrow rise">
+          <div>
+            <h3 class="sqname"><span class="sq sq-studs1" aria-hidden="true"></span>Slapping Studs 1</h3>
+            <p class="sqdiv" data-ed="about.t1.div">Sixth Division North</p>
+          </div>
+          <p class="sqtext" data-ed="about.t1">The most experienced squad in the club, and the one that takes the hardest games. If you have played before, this is usually where you are pointed.</p>
+        </div>
+        <div class="sqrow rise">
+          <div>
+            <h3 class="sqname"><span class="sq sq-studs2" aria-hidden="true"></span>Slapping Studs 2</h3>
+            <p class="sqdiv" data-ed="about.t2.div">Sixth Division North</p>
+          </div>
+          <p class="sqtext" data-ed="about.t2">The same division as Studs 1, which means the two squads meet each other in competition &mdash; the one fixture nobody on either bench needs reminding about.</p>
+        </div>
+        <div class="sqrow rise">
+          <div>
+            <h3 class="sqname"><span class="sq sq-stallions" aria-hidden="true"></span>Striking Stallions</h3>
+            <p class="sqdiv" data-ed="about.t3.div">Fifth Division North</p>
+          </div>
+          <p class="sqtext" data-ed="about.t3">Champions of the Fifth Division North in 2026 &mdash; the first divisional title in the club&rsquo;s history, won forty-four years after the first practice.</p>
+        </div>
+        <div class="sqrow rise">
+          <div>
+            <h3 class="sqname"><span class="sq sq-cadets" aria-hidden="true"></span>Cadets</h3>
+            <p class="sqdiv" data-ed="about.t4.div">No league</p>
+          </div>
+          <p class="sqtext" data-ed="about.t4">Where most people start. No league games, no experience assumed, and most of a season to learn to skate, stop and shoot before anyone asks you to do all three at once.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Where the club actually is, and what a member walks into. -->
+<section class="panel bone on-bone panel--cont" id="facts" data-label="Where and when">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead psub">
+        <div>
+          <h2 class="disp d3" data-ed="about.facts.h2">Where and when we skate</h2>
+        </div>
+      </div>
+      <div class="abwhere">
+        <figure class="abfig rise">
+          <div class="ph" data-slot="about-rink" data-img="assets/ijsbaan-twente.jpg" data-ph="IJsbaan Twente, Colosseum 90" role="img" aria-label="The IJsbaan Twente building, Colosseum 90, Enschede">
+            <span class="phcredit">Photo: Tubantia, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></span>
+          </div>
+          <figcaption data-ed="about.rink.cap">IJsbaan Twente, Colosseum 90 &mdash; our home ice. Photographed by someone else; the building is the right one.</figcaption>
+        </figure>
+        <div class="rise">
+          <dl class="fctlist">
+            <dt data-ed="about.f1.k">Home ice</dt>
+            <dd data-ed="about.f1.v">IJsbaan Twente, Colosseum 90, 7521 PT Enschede &mdash; about fifteen minutes by bike from the campus.</dd>
+            <dt data-ed="about.f2.k">Training</dt>
+            <dd data-ed="about.f2.v">Monday, Wednesday and Friday evenings.</dd>
+            <dt data-ed="about.f3.k">Who can join</dt>
+            <dd data-ed="about.f3.v">Students at the UT and at Saxion, and people who are not students at all.</dd>
+            <dt data-ed="about.f4.k">Gear</dt>
+            <dd data-ed="about.f4.v">The club lends skates, a helmet with a cage, gloves, pads, a stick and a neck guard. The first practice is free.</dd>
+            <dt data-ed="about.f5.k">Language</dt>
+            <dd data-ed="about.f5.v">English, on the ice and off it.</dd>
+            <dt data-ed="about.f6.k">The board</dt>
+            <dd data-ed="about.f6.v">bestuur@slappingstuds.nl &middot; Postbus 217, 7500 AE Enschede</dd>
+          </dl>
+          <a class="tlink" href="join.html">Sign up for a free practice</a>
+          <p class="formnote todo" style="margin-top:clamp(26px,3vw,38px)">Placeholder &mdash; squad descriptions, training evenings and member numbers to be confirmed by the board.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ===== SHARED FOOTER - identical on every page =====
+     A page-level element after </main>, not a panel of its own:
+     it takes exactly the height its four columns need plus its
+     own breathing room, and never a screen more. -->
+  <footer class="sitefoot">
+    <div class="wrap">
+      <div class="fgrid">
+        <div class="fcol">
+          <div class="wordmark"><span class="n">Slapping Studs</span><span class="s">SIJHV &middot; EST. 1982 &middot; ENSCHEDE</span></div>
+          <p class="body" data-ed="ft.b">The oldest student ice hockey association in the Netherlands, affiliated with the University of Twente.</p>
+        </div>
+        <div class="fcol"><h5>Club</h5><a href="about.html">About us</a><a href="history.html">History</a><a href="training.html">Training</a><a href="players.html">Players</a></div>
+        <div class="fcol"><h5>Play</h5><a href="games.html">This season</a><a href="past-games.html">Past seasons</a><a href="hockey.html#what">New to hockey</a><a href="hockey.html#gear">Gear</a></div>
+        <div class="fcol"><h5>Join &amp; members</h5><a href="join.html">Sign up for a practice</a><a href="pictures.html">Pictures</a><a href="sign-in.html">Sign in</a><a href="contact.html#find">Where to find us</a></div>
+      </div>
+      <div class="fbot">
+        <span>Design proposal &middot; 2026 &middot; not the live site</span>
+        <span data-ed="ft.meta">Postbus 217, 7500 AE Enschede &middot; bestuur@slappingstuds.nl</span>
+      </div>
+    </div>
+  </footer>
+<!-- ===== /SHARED FOOTER ===== -->
+
+
+<!-- admin layer: bar, drawer scrim, drawer, toast -->
+<div class="adminbar" id="adminbar"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="toast" id="toast"></div>
+
+<!-- Load order: content, roles and the URL map, then the engine.
+     Plain scripts, not modules, so a page can be opened straight
+     from disk without a local server. -->
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/routes.js"></script>
+<script src="js/core.js"></script>
+<script src="js/avatar.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/views.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

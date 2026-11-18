@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ===== SHARED HEAD - identical on every page except the four
+     values below. When this becomes templated, these are the
+     variables: title, description, robots, body[data-page|data-nav]. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stats &mdash; The Slapping Studs</title>
+<meta name="description" content="Per-player scoring for the season — games, goals, assists and points.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+
+<!-- Load order matters: tokens define the variables everything
+     else uses, and every file after it only spends those values.
+     paper.css follows components.css because it is a second set of
+     components - the same system worked on paper - and not an
+     override of the first. deck.css is last of the layout files
+     because it is the one that decides how a section is sized. -->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/paper.css">
+<link rel="stylesheet" href="css/deck.css">
+<link rel="stylesheet" href="css/admin.css">
+<!-- ===== /SHARED HEAD ===== -->
+</head>
+<!-- data-page  = which document this is; js/routes.js maps it to a URL
+     data-nav   = which top-level nav item lights up -->
+<body data-page="stats" data-nav="team">
+
+<!-- ===== SHARED HEADER - identical on every page ===== -->
+
+<!-- hairline column grid, purely decorative -->
+<div class="gridlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<!-- invisible strip that brings the collapsed header back -->
+<div id="hotzone" aria-hidden="true"></div>
+
+<header id="hdr">
+  <div class="bar">
+    <a class="badge" href="index.html">
+      <span class="mark">
+        <!-- Placeholder mark. Replace with the real club badge:
+             assets/logo.svg, kept as SVG so it stays sharp. -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#EDEAE1" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 4c1.6 1.2 2.4 2.9 2.6 4.6.9-.6 2-.7 3-.3l2.6 1.1"/>
+          <path d="M6.6 8.6c-.6 1.9-.4 3.9.6 5.6l1.6 2.7"/>
+          <path d="M12.2 9.4l5.4 2.3c1.3.6 2 2 1.7 3.4l-.7 3.3"/>
+          <path d="M8.8 16.9l-1.3 3.2M19.4 18.4l1.1 2"/>
+        </svg>
+      </span>
+      <span class="wordmark"><span class="n">Slapping Studs</span><span class="s">EST. 1982 &middot; ENSCHEDE</span></span>
+    </a>
+
+    <!-- nav and account chip are rendered by js/views.js because
+         their contents depend on who is signed in -->
+    <nav id="nav"></nav>
+    <div class="hactions" id="hactions"></div>
+  </div>
+  <div class="acctmenu" id="acctmenu"></div>
+</header>
+<div class="peekhint" aria-hidden="true"></div>
+<!-- ===== /SHARED HEADER ===== -->
+
+<main>
+
+<!-- renderStats() (js/views.js) fills #statwrap from the "stats"
+     collection - the club record as four gold tiles. The strip
+     sits flush under the head and the section ends right after
+     it: no second block of ink between the gold and the paper.
+     Fully admin-editable, same "+ Add" convention as everywhere. -->
+<section class="panel" id="record" data-label="Club record">
+  <div class="panel__in record__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h1 class="disp pgtitle" data-ed="stats.record.h2">Club stats</h1>
+          <p class="body pagelead" data-ed="stats.record.lead">Season 2025/26: where our squads finished, and who scored the points.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="strip"><div class="wrap" id="statwrap"></div></div>
+  <div class="wrap record__add"><button class="addtile" data-add="stats">+ Add achievement</button></div>
+</section>
+
+<!-- renderScoring() in js/views.js fills #statfilters, #leaders,
+     #scorehead, #scoring, #scoremore and #scoremeta.
+     The panel is id=stats, NOT id=scoring: the table body already
+     owns that id, and two elements sharing one id would let
+     $(#scoring) match the panel and get its whole contents wiped.
+     Leaders first (points / goals / assists, top three each),
+     then the table: rank is always points order, the head sorts
+     by any stat, and it opens on the top 15 with a "show all"
+     button so 50-odd rows don't have to be scrolled past to reach
+     the footer. -->
+<section class="panel bone on-bone" id="stats" data-label="Stats">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h2 class="disp d3" data-ed="stats.scoring.h2">Scoring</h2>
+        </div>
+        <div class="scoremeta" id="scoremeta"></div>
+      </div>
+      <div class="filters" id="statfilters"></div>
+      <div class="pgrid pgrid--3 leaders" id="leaders"></div>
+      <div class="ptable-wrap">
+        <table class="ptable scoretable">
+          <thead id="scorehead"></thead>
+          <tbody id="scoring"></tbody>
+        </table>
+      </div>
+      <div class="scoremore" id="scoremore"></div>
+      <p class="formnote todo" style="margin-top:22px">Placeholder &mdash; the club does not publish per-player statistics. These figures are generated from each player id to show the shape of the table, and are not real.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ===== SHARED FOOTER - identical on every page =====
+     A page-level element after </main>, not a panel of its own:
+     it takes exactly the height its four columns need plus its
+     own breathing room, and never a screen more. -->
+  <footer class="sitefoot">
+    <div class="wrap">
+      <div class="fgrid">
+        <div class="fcol">
+          <div class="wordmark"><span class="n">Slapping Studs</span><span class="s">SIJHV &middot; EST. 1982 &middot; ENSCHEDE</span></div>
+          <p class="body" data-ed="ft.b">The oldest student ice hockey association in the Netherlands, affiliated with the University of Twente.</p>
+        </div>
+        <div class="fcol"><h5>Club</h5><a href="about.html">About us</a><a href="history.html">History</a><a href="training.html">Training</a><a href="players.html">Players</a></div>
+        <div class="fcol"><h5>Play</h5><a href="games.html">This season</a><a href="past-games.html">Past seasons</a><a href="hockey.html#what">New to hockey</a><a href="hockey.html#gear">Gear</a></div>
+        <div class="fcol"><h5>Join &amp; members</h5><a href="join.html">Sign up for a practice</a><a href="pictures.html">Pictures</a><a href="sign-in.html">Sign in</a><a href="contact.html#find">Where to find us</a></div>
+      </div>
+      <div class="fbot">
+        <span>Design proposal &middot; 2026 &middot; not the live site</span>
+        <span data-ed="ft.meta">Postbus 217, 7500 AE Enschede &middot; bestuur@slappingstuds.nl</span>
+      </div>
+    </div>
+  </footer>
+<!-- ===== /SHARED FOOTER ===== -->
+
+
+<!-- admin layer: bar, drawer scrim, drawer, toast -->
+<div class="adminbar" id="adminbar"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="toast" id="toast"></div>
+
+<!-- Load order: content, roles and the URL map, then the engine.
+     Plain scripts, not modules, so a page can be opened straight
+     from disk without a local server. -->
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/routes.js"></script>
+<script src="js/core.js"></script>
+<script src="js/avatar.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/views.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

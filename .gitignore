@@ -1,0 +1,13 @@
+# macOS / Windows noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# nothing is built, but keep these out if a toolchain ever arrives
+node_modules/
+dist/

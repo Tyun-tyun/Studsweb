@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ===== SHARED HEAD - identical on every page except the four
+     values below. When this becomes templated, these are the
+     variables: title, description, robots, body[data-page|data-nav]. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join &mdash; The Slapping Studs</title>
+<meta name="description" content="Sign up for a free introduction practice with the Slapping Studs. No experience needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+
+<!-- Load order matters: tokens define the variables everything
+     else uses, and every file after it only spends those values.
+     paper.css follows components.css because it is a second set of
+     components - the same system worked on paper - and not an
+     override of the first. deck.css is last of the layout files
+     because it is the one that decides how a section is sized. -->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/paper.css">
+<link rel="stylesheet" href="css/deck.css">
+<link rel="stylesheet" href="css/admin.css">
+<!-- ===== /SHARED HEAD ===== -->
+</head>
+<!-- data-page  = which document this is; js/routes.js maps it to a URL
+     data-nav   = which top-level nav item lights up -->
+<body data-page="join" data-nav="contact">
+
+<!-- ===== SHARED HEADER - identical on every page ===== -->
+
+<!-- hairline column grid, purely decorative -->
+<div class="gridlines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<!-- invisible strip that brings the collapsed header back -->
+<div id="hotzone" aria-hidden="true"></div>
+
+<header id="hdr">
+  <div class="bar">
+    <a class="badge" href="index.html">
+      <span class="mark">
+        <!-- Placeholder mark. Replace with the real club badge:
+             assets/logo.svg, kept as SVG so it stays sharp. -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#EDEAE1" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 4c1.6 1.2 2.4 2.9 2.6 4.6.9-.6 2-.7 3-.3l2.6 1.1"/>
+          <path d="M6.6 8.6c-.6 1.9-.4 3.9.6 5.6l1.6 2.7"/>
+          <path d="M12.2 9.4l5.4 2.3c1.3.6 2 2 1.7 3.4l-.7 3.3"/>
+          <path d="M8.8 16.9l-1.3 3.2M19.4 18.4l1.1 2"/>
+        </svg>
+      </span>
+      <span class="wordmark"><span class="n">Slapping Studs</span><span class="s">EST. 1982 &middot; ENSCHEDE</span></span>
+    </a>
+
+    <!-- nav and account chip are rendered by js/views.js because
+         their contents depend on who is signed in -->
+    <nav id="nav"></nav>
+    <div class="hactions" id="hactions"></div>
+  </div>
+  <div class="acctmenu" id="acctmenu"></div>
+</header>
+<div class="peekhint" aria-hidden="true"></div>
+<!-- ===== /SHARED HEADER ===== -->
+
+<!-- ===== THE PAGE =====
+     One section on this site is sized to exactly one screen: the
+     .panel--cover on the home page, where a reader should arrive to
+     a photograph and nothing else. Every other section anywhere -
+     including the .pagehead an inside page opens with - is an
+     ordinary .panel and takes the height its own content needs.
+     id = the deep link; data-label = what the section is called.
+     Add a section by adding one; there is nothing to register.
+     ================================================================ -->
+<main>
+
+<!-- Same field ids as the form on the home page, on purpose:
+     bindForms() in js/app.js and renderJoin() in js/views.js
+     drive both with no page-specific code. -->
+<section class="panel" id="form" data-label="Sign up">
+  <div class="panel__in">
+    <div class="wrap">
+      <div class="phead">
+        <div>
+          <h1 class="disp pgtitle" data-ed="join.form.h2">Come to a practice</h1>
+          <p class="body pagelead" data-ed="join.form.lead">Sign up for a free first practice with the Slapping Studs at IJsbaan Twente in Enschede. No skating experience needed; we lend you the kit.</p>
+        </div>
+      </div>
+      <div class="joingrid2 even">
+        <div>
+          <div id="joinform">
+            <form id="joinformel" class="bigform" method="post" action="#">
+              <div class="fpair">
+                <div><label for="j-name">Your name</label><input id="j-name" name="name" type="text" autocomplete="name" required></div>
+                <div><label for="j-email">E-mail</label><input id="j-email" name="email" type="email" autocomplete="email" placeholder="you@student.utwente.nl" required></div>
+              </div>
+              <div class="fpair">
+                <div><label for="j-study">Are you a student?</label>
+                  <select id="j-study" name="study">
+                    <option>UT student</option><option>Saxion student</option>
+                    <option>Student elsewhere</option><option>Not a student</option>
+                  </select></div>
+                <div><label for="j-exp">Hockey and skating experience</label>
+                  <select id="j-exp" name="experience">
+                    <option>Never played, cannot skate</option>
+                    <option>Can skate, never played hockey</option>
+                    <option>Played a bit</option>
+                    <option>Played in a club before</option>
+                  </select></div>
+              </div>
+              <div><label for="j-session">Which session</label>
+                <select id="j-session" name="session">
+                  <option>Intro practice &middot; next available date</option>
+                  <option>Intro practice &middot; 11 October</option>
+                  <option>A regular training hour</option>
+                  <option>Just tell me more first</option>
+                </select></div>
+              <div><label for="j-note">Anything we should know</label><textarea id="j-note" name="note" placeholder="Skate size, injuries, questions - optional"></textarea></div>
+              <button class="btn btn-gold" type="submit">Send to the board</button>
+              <p class="formnote">Free and no commitment. It goes to the board for review - nobody is added to anything automatically.</p>
+            </form>
+          </div>
+          <div id="joindone"></div>
+        </div>
+        <aside class="visitcard">
+          <div class="ph" data-slot="join-map" data-img="assets/ijsbaan-twente.jpg" data-ph="IJsbaan Twente, Colosseum 90" role="img" aria-label="The IJsbaan Twente building, Colosseum 90, Enschede">
+            <span class="phcap">IJsbaan Twente, Colosseum 90 &mdash; our home ice</span>
+            <span class="phcredit">Photo: Tubantia, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></span>
+          </div>
+          <div class="visitbody">
+            <h2 class="disp d4" style="margin:0">Where you will skate</h2>
+            <p class="addr">IJsbaan Twente<br>Colosseum 90, 7521 PT Enschede</p>
+            <a class="btn btn-sm btn-gold" href="https://www.openstreetmap.org/search?query=Colosseum%2090%2C%207521%20PT%20Enschede" target="_blank" rel="noopener">Directions</a>
+            <p class="visitmail">Rather ask a person first? <a href="mailto:bestuur@slappingstuds.nl">bestuur@slappingstuds.nl</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ===== SHARED FOOTER - identical on every page =====
+     A page-level element after </main>, not a panel of its own:
+     it takes exactly the height its four columns need plus its
+     own breathing room, and never a screen more. -->
+  <footer class="sitefoot">
+    <div class="wrap">
+      <div class="fgrid">
+        <div class="fcol">
+          <div class="wordmark"><span class="n">Slapping Studs</span><span class="s">SIJHV &middot; EST. 1982 &middot; ENSCHEDE</span></div>
+          <p class="body" data-ed="ft.b">The oldest student ice hockey association in the Netherlands, affiliated with the University of Twente.</p>
+        </div>
+        <div class="fcol"><h5>Club</h5><a href="about.html">About us</a><a href="history.html">History</a><a href="training.html">Training</a><a href="players.html">Players</a></div>
+        <div class="fcol"><h5>Play</h5><a href="games.html">This season</a><a href="past-games.html">Past seasons</a><a href="hockey.html#what">New to hockey</a><a href="hockey.html#gear">Gear</a></div>
+        <div class="fcol"><h5>Join &amp; members</h5><a href="join.html">Sign up for a practice</a><a href="pictures.html">Pictures</a><a href="sign-in.html">Sign in</a><a href="contact.html#find">Where to find us</a></div>
+      </div>
+      <div class="fbot">
+        <span>Design proposal &middot; 2026 &middot; not the live site</span>
+        <span data-ed="ft.meta">Postbus 217, 7500 AE Enschede &middot; bestuur@slappingstuds.nl</span>
+      </div>
+    </div>
+  </footer>
+<!-- ===== /SHARED FOOTER ===== -->
+
+
+<!-- admin layer: bar, drawer scrim, drawer, toast -->
+<div class="adminbar" id="adminbar"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="toast" id="toast"></div>
+
+<!-- Load order: content, roles and the URL map, then the engine.
+     Plain scripts, not modules, so a page can be opened straight
+     from disk without a local server. -->
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/routes.js"></script>
+<script src="js/core.js"></script>
+<script src="js/avatar.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/views.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
